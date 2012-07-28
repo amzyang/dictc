@@ -45,13 +45,13 @@
 
 == 使用示例 ==
 
- $ ./dictc hello
+ $ dictc hello
 直接查询 hello
 
- $ ./dictc
+ $ dictc
 进入交互式模式，按 &lt;CTRL-d&gt; 退出！
 
- $ ./dictc -d bing -c dictcn
+ $ dictc -d bing -c dictcn
 使用 dict.bing.com.cn 的在线翻译，dict.cn 来做查询时的自动补全！
 == 待办项 ==
 
