@@ -30,7 +30,7 @@
  $ python setup.py install
 
 * 下载 rpm 包安装
- https://github.com/grassofhust/dictc/raw/master/dictc-0.1-1.noarch.rpm
+ https://github.com/grassofhust/dictc/assets/raw/master/dictc-0.1-1.noarch.rpm
 
 == 用法 ==
 
