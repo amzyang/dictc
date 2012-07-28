@@ -12,6 +12,9 @@ setup(name='dictc',
      packages=['DictC'],
      scripts=['dictc'],
      license='Beerware',
+     data_files=[('/etc/bash_completion.d/',
+                  ['scripts/dictc-bash-completion.sh']),
+                 ('/usr/share/zsh/site-functions/', ['scripts/_dictc'])],
      description=u'一个简单的在线查询单词小工具！',
      long_description=u"""主要功能：
 - 支持多个在线词典服务
