@@ -53,6 +53,11 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 
  dictc -d bing -c dictcn
 使用 dict.bing.com.cn 的在线翻译，dict.cn 来做查询时的自动补全！
+
+== 截图 ==
+
+[[File:https://github.com/grassofhust/dictc/raw/master/assets/screenshot.jpeg]]
+
 == 待办项 ==
 
 * 不使用系统 PAGER 环境变量，利用 ncurses 来输出，更好的控制输出样式及动作
