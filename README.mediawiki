@@ -60,9 +60,10 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 
 == 待办项 ==
 
-* 不使用系统 PAGER 环境变量，利用 ncurses 来输出，更好的控制输出样式及动作
+* 利用 ncurses 来输出，更好的控制输出样式及交互
 * 后台查找
 * 国际化
+* 支持 stardict 词典格式？
 
 == 相关链接 ==
 
