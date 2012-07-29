@@ -135,7 +135,7 @@ def main(args):
         readline.read_history_file(histfile)
     if not args.words:
         try:
-            print 'Type <Ctrl-D> or <Ctrl-C> to quit.'
+            print 'Press the <Ctrl-D> or <Ctrl-C> to exit!'
             completer = Completer()
             readline.set_completer(completer.complete)
             readline.set_completer_delims('')
