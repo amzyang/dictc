@@ -18,16 +18,16 @@
 :gstreamer 的 python 绑定:
 
 :fedora 等安装方法：
- $ su -c 'yum -y install gstreamer-python'
+ su -c 'yum -y install gstreamer-python'
 :ubuntu 等安装方法：
- $ su -c 'apt-get install python-gst0.10'
+ su -c 'apt-get install python-gst0.10'
 
 安装完依赖之后，接下来安装 dictcn。
 
 * 从源码安装：
- $ git clone https://github.com/grassofhust/dictc.git
- $ cd dictc
- $ python setup.py install
+ git clone https://github.com/grassofhust/dictc.git
+ cd dictc
+ python setup.py install
 
 * 下载 rpm 包安装
 https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
@@ -46,13 +46,13 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 
 == 使用示例 ==
 
- $ dictc hello
+ dictc hello
 直接查询 hello
 
- $ dictc
+ dictc
 进入交互式模式，按 &lt;CTRL-d&gt; 退出！
 
- $ dictc -d bing -c dictcn
+ dictc -d bing -c dictcn
 使用 dict.bing.com.cn 的在线翻译，dict.cn 来做查询时的自动补全！
 == 待办项 ==
 
