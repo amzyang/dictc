@@ -30,7 +30,7 @@
  $ python setup.py install
 
 * 下载 rpm 包安装
- https://github.com/grassofhust/dictc/assets/raw/master/dictc-0.1-1.noarch.rpm
+ https://github.com/grassofhust/dictc/assets/raw/master/dictc-lastest.noarch.rpm
 
 == 用法 ==
 
@@ -55,7 +55,7 @@
 使用 dict.bing.com.cn 的在线翻译，dict.cn 来做查询时的自动补全！
 == 待办项 ==
 
-* zsh/bash 自动补全脚本
+* <strike>zsh/bash 自动补全脚本</strike>
 * 不使用系统 PAGER 环境变量，利用 ncurses 来输出，更好的控制输出样式及动作
 * 后台查找
 * 国际化

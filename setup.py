@@ -4,7 +4,7 @@ from distutils.core import setup
 
 
 setup(name='dictc',
-     version='0.1',
+     version='0.1.1',
      url='https://github.com/grassofhust/dictc',
      author='kikyo',
      author_email='frederick.zou@gmail.com',
