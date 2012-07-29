@@ -3,11 +3,8 @@ import sys
 try:
     import gst
 except ImportError:
-    print """Python bindings for GStreamer is missing! Try install
-gstreamer-python first"""
+    print """Python binding for GStreamer is missing!"""
     raise
-    # @TODO
-    sys.exit(1)
 
 
 class Sound():

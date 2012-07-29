@@ -2,7 +2,8 @@
 
 _arguments -A "-*" \
 	'(- : *)'{-h,--help}'[Show help message and exit]' \
-	-d'[Choose dictionary]:dictionary:((qq bing))' \
 	-c'[Choose completion service]:completion:((qq bing dictcn))' \
+	-d'[Choose dictionary]:dictionary:((qq bing))' \
+	--nosound'[Disable sound support]' \
 	'*: :_files'
 	

@@ -117,11 +117,15 @@ def output(content):
 
 
 def thread(keyword):
-    from DictC.Sound import Sound  # @hack
-    s = Sound()
-    t = SoundThread(s, BaseDict.soundUri(keyword))
-    t.setDaemon(True)
-    t.start()
+    if not args.nosound:
+        try:
+            from DictC.Sound import Sound  # @hack
+            s = Sound()
+            t = SoundThread(s, BaseDict.soundUri(keyword))
+            t.setDaemon(True)
+            t.start()
+        except ImportError:
+            pass
 
     f = FetchThread(keyword)
     f.setDaemon(True)
@@ -129,7 +133,7 @@ def thread(keyword):
     f.join()
 
 
-def main(args):
+def main():
     histfile = "%s/dict_qq_history_py" % tempfile.gettempdir()
     if (os.path.exists(histfile)):
         readline.read_history_file(histfile)
@@ -220,6 +224,8 @@ if __name__ == "__main__":
                         choices=map(lambda s: s.metadata['id'],
                                     CLIAction.services),
                        )
+    parser.add_argument('--nosound', help=u'禁用发音', dest='nosound',
+                        action='store_true', default=False)
     parser.add_argument('words', metavar='keyword or sentence', type=str,
                         nargs='*')
     args = parser.parse_args()
@@ -227,7 +233,7 @@ if __name__ == "__main__":
     Dict = args.dict
     Sugg = args.sugg
 
-    main(args)
+    main()
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 textwidth=79
