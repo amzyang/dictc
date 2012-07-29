@@ -4,7 +4,7 @@
 - 支持多个在线词典服务
 :qq    dict.qq.com
 :bing  dict.bing.com.cn
-- 支持交互式模式下按<Tab>自动补全
+- 支持交互式模式下按<Tab>自动补全单词，支持在 bash/zsh 下按 <Tab> 补全参数及选项
 :qq,bing,dictcn(dict.cn)
 - 发音支持
 :需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
