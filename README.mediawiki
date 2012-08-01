@@ -1,5 +1,7 @@
 一个简单的在线查询单词小工具！
 
+当前版本：0.1.1
+
 == 主要功能 ==
 - 支持多个在线词典服务
 :qq    dict.qq.com
@@ -34,7 +36,7 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 
 == 用法 ==
 
- dictc [-h] [-d dictionary] [-c completion] [--nosound] [keyword or sentence [keyword or sentence ...]]
+ dictc [-h] [-d dictionary] [-c completion] [--nosound] [-v] [keyword or sentence [keyword or sentence ...]]
 
 === 可选参数 ===
 
