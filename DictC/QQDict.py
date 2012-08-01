@@ -48,9 +48,9 @@ class QQDict(BaseDict):
         except:
             raise
 
+        lines = []
         if 'local' in self.data:
             local = self.data['local']
-            lines = []
             for base in local:
                 lines.extend(self._process_base(base))
                 lines.extend(self._process_mor(base))
@@ -58,14 +58,15 @@ class QQDict(BaseDict):
                 lines.extend(self._process_sen(base))
                 lines.extend(self._process_ph(base))
 
-            if 'dlg' in self.data:
-                dlg = self.data['dlg']
-                lines.extend(self._process_dlg(dlg))
+        if 'dlg' in self.data:
+            dlg = self.data['dlg']
+            lines.extend(self._process_dlg(dlg))
 
-            if 'netsen' in self.data:
-                netsen = self.data['netsen']
-                lines.extend(self._process_netsen(netsen))
+        if 'netsen' in self.data:
+            netsen = self.data['netsen']
+            lines.extend(self._process_netsen(netsen))
 
+        if lines:
             return True, '\n'.join(lines).encode('utf8')
         else:
             return False, ''
