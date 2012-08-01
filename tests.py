@@ -65,7 +65,7 @@ class QQDictTest(unittest.TestCase):
         from DictC.QQDict import QQDict
         self.QQDict = QQDict
         self.qq = QQDict()
-        self.keywords = ['addicted']
+        self.keywords = ['addicted', 'nearest']
 
     def test_fetchSuggestion(self):
         keywords = [
@@ -73,10 +73,15 @@ class QQDictTest(unittest.TestCase):
         ]
         for keyword in keywords:
             data = self.QQDict.fetchSuggestion(keyword)
+            self.assertIsInstance(data, list)
             self.assertTrue(data)
 
         self.assertEqual(1, len(data))
         self.assertTupleEqual((u'hello', u'int. 喂, 嘿'), data[0])
+
+        data = self.QQDict.fetchSuggestion('nearest')
+        self.assertIsInstance(data, list)
+        self.assertFalse(data)
 
     def test_getOutput(self):
         for keyword in self.keywords:
