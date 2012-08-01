@@ -202,7 +202,7 @@ if __name__ == "__main__":
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     CLIAction.services = dict_services
     parser.add_argument('-d', nargs=1,
-                        help=u'词典：%s ' %
+                        help=u'词典（默认：qq）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
                                      CLIAction.services)),
                         metavar=u'dictionary',
@@ -214,7 +214,7 @@ if __name__ == "__main__":
                        )
     CLIAction.services = completion_services
     parser.add_argument('-c', nargs=1,
-                        help=u'自动补全：%s ' %
+                        help=u'自动补全（默认：qq）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
                                      CLIAction.services)),
                         metavar=u'completion',
@@ -224,7 +224,7 @@ if __name__ == "__main__":
                         choices=map(lambda s: s.metadata['id'],
                                     CLIAction.services),
                        )
-    parser.add_argument('--nosound', help=u'禁用发音', dest='nosound',
+    parser.add_argument('--nosound', help=u'禁用发音（默认启用）', dest='nosound',
                         action='store_true', default=False)
     parser.add_argument('words', metavar='keyword or sentence', type=str,
                         nargs='*')

@@ -39,9 +39,9 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 === 可选参数 ===
 
  -h, --help           显示帮助信息
- -d dictionary        词典：qq,bing
- -c completion        自动补全：qq,bing,dictcn
- --nosound            禁用发音
+ -d dictionary        词典（默认：qq）：qq,bing
+ -c completion        自动补全（默认：qq）：qq,bing,dictcn
+ --nosound            禁用发音（默认启用）
 
 == 使用示例 ==
 
