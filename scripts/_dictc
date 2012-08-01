@@ -1,7 +1,8 @@
 #compdef dictc
 
 _arguments -A "-*" \
-	'(- : *)'{-h,--help}'[Show help message and exit]' \
+	'(- : *)'{-h,--help}'[show this help message and exit]' \
+	'(- : *)'{-v,--version}"[show program's version number and exit]" \
 	-c'[Choose completion service]:completion:((qq bing dictcn))' \
 	-d'[Choose dictionary]:dictionary:((qq bing))' \
 	--nosound'[Disable sound support]' \

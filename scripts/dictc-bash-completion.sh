@@ -6,7 +6,7 @@ _dictc()
     _init_completion -s || return
 
     case "$prev" in
-        -h|--help|--nosound)
+        -h|--help|--nosound|-v|--version)
             return
             ;;
         -d)
@@ -22,7 +22,7 @@ _dictc()
     $split && return 0
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W "-h --help -d -c --nosound" -- "$cur" ) )
+        COMPREPLY=( $( compgen -W "-h --help -d -c --nosound -v --version" -- "$cur" ) )
         return
     fi
 

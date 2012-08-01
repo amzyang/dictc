@@ -42,6 +42,7 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
  -d dictionary        词典（默认：qq）：qq,bing
  -c completion        自动补全（默认：qq）：qq,bing,dictcn
  --nosound            禁用发音（默认启用）
+ -v, --version        show program's version number and exit
 
 == 使用示例 ==
 

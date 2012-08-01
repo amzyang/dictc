@@ -226,6 +226,8 @@ if __name__ == "__main__":
                        )
     parser.add_argument('--nosound', help=u'禁用发音（默认启用）', dest='nosound',
                         action='store_true', default=False)
+    parser.add_argument('-v', '--version', action='version',
+                        version='%(prog)s 0.1.1')
     parser.add_argument('words', metavar='keyword or sentence', type=str,
                         nargs='*')
     args = parser.parse_args()
