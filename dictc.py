@@ -163,7 +163,7 @@ if __name__ == "__main__":
     class CLIAction(argparse.Action):
         def __call__(self, parser, namespace, values, option_string=None):
             for service in self.services:
-                if service.metadata['id'] == values[0]:
+                if service.metadata['id'] == values:
                     return setattr(namespace, self.dest, service)
 
     description = u'一个简单的在线查询单词小工具！'
@@ -203,7 +203,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=description, epilog=epilog,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     CLIAction.services = dict_services
-    parser.add_argument('-d', nargs=1,
+    parser.add_argument('-d', nargs='?',
                         help=u'词典（默认：qq）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
                                      CLIAction.services)),
@@ -215,7 +215,7 @@ if __name__ == "__main__":
                                     CLIAction.services),
                        )
     CLIAction.services = completion_services
-    parser.add_argument('-c', nargs=1,
+    parser.add_argument('-c', nargs='?',
                         help=u'自动补全（默认：qq）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
                                      CLIAction.services)),
