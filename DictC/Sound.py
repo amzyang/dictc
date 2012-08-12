@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 try:
     import gst
 except ImportError:
@@ -13,16 +12,19 @@ class Sound():
         fakesink = gst.element_factory_make("fakesink", "fakesink")
         self.player.set_property("video-sink", fakesink)
         bus = self.player.get_bus()
-        bus.add_signal_watch()
         bus.connect("message", self.on_message)
+        bus.add_signal_watch()
 
     def on_message(self, bus, message):
         t = message.type
         if t == gst.MESSAGE_EOS:
             self.player.set_state(gst.STATE_NULL)
+        elif t == gst.MESSAGE_ERROR:
+            self.player.set_state(gst.STATE_NULL)
 
-    def do(self):
-        self.player.set_property("uri", self.path)
+    def do(self, uri):
+        self.player.set_state(gst.STATE_NULL)
+        self.player.set_property("uri", uri)
         self.player.set_state(gst.STATE_PLAYING)
 
 

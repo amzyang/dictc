@@ -21,14 +21,25 @@ def width(string):
 
 
 class SoundThread(threading.Thread):
-    def __init__(self, s, uri):
+    def __init__(self, s):
         threading.Thread.__init__(self)
         self.s = s
-        self.uri = uri
+        self._uri = ''
+
+    def set_uri(self, uri):
+        self._uri = uri
+        self.s.do(self.uri)
+
+    def get_uri(self):
+        return self._uri
+
+    def del_uri(self):
+        del self._uri
+
+    uri = property(get_uri, set_uri, del_uri, "Change src uri!")
 
     def run(self):
-        self.s.path = self.uri
-        self.s.do()
+        pass
 
 
 class FetchThread(threading.Thread):
@@ -117,16 +128,6 @@ def output(content):
 
 
 def thread(keyword):
-    if not args.nosound:
-        try:
-            from DictC.Sound import Sound  # @hack
-            s = Sound()
-            t = SoundThread(s, BaseDict.soundUri(keyword))
-            t.setDaemon(True)
-            t.start()
-        except ImportError:
-            pass
-
     f = FetchThread(keyword)
     f.setDaemon(True)
     f.start()
@@ -137,6 +138,16 @@ def main():
     histfile = "%s/dict_qq_history_py" % tempfile.gettempdir()
     if (os.path.exists(histfile)):
         readline.read_history_file(histfile)
+    if not args.nosound:
+        try:
+            from DictC.Sound import Sound  # @hack
+            s = Sound()
+            t = SoundThread(s)
+            t.setDaemon(True)
+            t.start()
+        except ImportError:
+            pass
+
     if not args.words:
         try:
             print 'Press <Ctrl-D> or <Ctrl-C> to exit!'
@@ -147,11 +158,14 @@ def main():
                 line = raw_input('>> ')
                 keyword = line.strip()
                 if len(keyword):
+                    t.uri = BaseDict.soundUri(keyword)
                     thread(keyword)
         except (EOFError, KeyboardInterrupt, SystemExit):
             pass
     else:
-        thread(' '.join(args.words))
+        keyword = ' '.join(args.words)
+        t.uri = BaseDict.soundUri(keyword)
+        thread(keyword)
 
     readline.write_history_file(histfile)
 
@@ -200,8 +214,9 @@ if __name__ == "__main__":
     Beerware (If we meet some day, and you think
     this stuff is worth it, you can buy me a beer.)
     """ % (sys.argv[0], sys.argv[0], sys.argv[0])
+    formatter_class = argparse.RawDescriptionHelpFormatter
     parser = argparse.ArgumentParser(description=description, epilog=epilog,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+                                     formatter_class=formatter_class)
     CLIAction.services = dict_services
     parser.add_argument('-d', nargs='?',
                         help=u'词典（默认：qq）：%s ' %
