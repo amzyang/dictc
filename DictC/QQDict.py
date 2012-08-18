@@ -23,10 +23,11 @@ class QQDict(BaseDict):
         keyword = keyword.strip()
         conn = httplib.HTTPConnection('dict.qq.com', timeout=2)
         headers = {'Referer': 'http://dict.qq.com/'}
-        conn.request('GET',
-                '/sug?%s' % (urlencode({'q': keyword}).split('=')[1]),
-                body=None,
-                headers=headers)
+        conn.request(
+            'GET',
+            '/sug?%s' % (urlencode({'q': keyword}).split('=')[1]),
+            body=None,
+            headers=headers)
         r = conn.getresponse()
         if r.status == 200:
             data = r.read().decode('gb18030')
@@ -74,10 +75,11 @@ class QQDict(BaseDict):
     def _fetch_content(self):
         conn = httplib.HTTPConnection('dict.qq.com', timeout=5)
         headers = {'Referer': 'http://dict.qq.com/'}
-        conn.request('GET',
-                '/dict?%s' % urlencode({'f': 'web', 'q': self.keyword}),
-                body=None,
-                headers=headers)
+        conn.request(
+            'GET',
+            '/dict?%s' % urlencode({'f': 'web', 'q': self.keyword}),
+            body=None,
+            headers=headers)
         r = conn.getresponse()
         if r.status == 200:
             data = simplejson.loads(r.read())
@@ -117,7 +119,7 @@ class QQDict(BaseDict):
             lines.append('')
             for exp in base['des']:
                 if isinstance(exp, basestring):
-                    lines.append(exp)
+                    lines.append(BaseDict.html_entity_decode(exp))
                     continue
                 s = []
                 if 'p' in exp:
@@ -175,7 +177,7 @@ class QQDict(BaseDict):
         lines = [u'\n\n情景对话']
         for sense in dlg:
             lines.append("\n\t%s%s\n" % (self.html2txt(sense['t']),
-                self.html2txt(sense['s'])))
+                                         self.html2txt(sense['s'])))
             conversions = sense['c']
             for c in conversions:
                 lines.append("\t\t%s: %s" % (self.html2txt(c['n']),
