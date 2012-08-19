@@ -89,7 +89,7 @@ class Completer(threading.Thread):
             self.matching_words = [
                 (w.encode('utf8'), t.encode('utf8')) for w, t in self.words if
                 w.encode('utf8').lower().startswith(prefix.lower())
-                ]
+            ]
             widest = max([width(w.decode('utf8')) for w, t in
                           self.matching_words])
             self.matching_words = [
@@ -228,7 +228,7 @@ if __name__ == "__main__":
                         default=CLIAction.services[0],
                         choices=map(lambda d: d.metadata['id'],
                                     CLIAction.services),
-                       )
+                        )
     CLIAction.services = completion_services
     parser.add_argument('-c', nargs='?',
                         help=u'自动补全（默认：qq）：%s ' %
@@ -240,7 +240,7 @@ if __name__ == "__main__":
                         default=CLIAction.services[0],
                         choices=map(lambda s: s.metadata['id'],
                                     CLIAction.services),
-                       )
+                        )
     parser.add_argument('--nosound', help=u'禁用发音（默认启用）', dest='nosound',
                         action='store_true', default=False)
     parser.add_argument('-v', '--version', action='version',
