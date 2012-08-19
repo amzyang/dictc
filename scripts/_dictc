@@ -1,10 +1,10 @@
 #compdef dictc
 
 _arguments -A "-*" \
-	'(- : *)'{-h,--help}'[Show this help message and exit]' \
-	'(- : *)'{-v,--version}"[Show program's version number and exit]" \
-	-c'[Choose completion service]:completion:((qq bing dictcn))' \
-	-d'[Choose dictionary]:dictionary:((qq bing))' \
-	--nosound'[Disable sound support]' \
+	'(- : *)'{-h,--help}'[show this help message and exit]' \
+	'(- : *)'{-v,--version}"[show program's version number and exit]" \
+	-c'[choose completion service]:completion:((qq bing dictcn))' \
+	-d'[choose dictionary]:dictionary:((qq bing))' \
+	--nosound'[disable sound support]' \
 	'*: :_files'
 	
