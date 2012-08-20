@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
-try:
-    import gst
-except ImportError:
-    print """Python binding for GStreamer is missing!"""
-    raise
+from DictC.SuppressOutput import SuppressOutput
+
+
+with SuppressOutput():
+    try:
+        import gst
+    except ImportError:
+        print """Python bindings for GStreamer is missing!"""
+        raise
 
 
 class Sound():

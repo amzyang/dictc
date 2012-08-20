@@ -138,7 +138,8 @@ def main():
     histfile = "%s/dict_qq_history_py" % tempfile.gettempdir()
     if (os.path.exists(histfile)):
         readline.read_history_file(histfile)
-    if not args.nosound:
+    hasSound = not args.nosound
+    if hasSound:
         try:
             from DictC.Sound import Sound  # @hack
             s = Sound()
@@ -146,7 +147,7 @@ def main():
             t.setDaemon(True)
             t.start()
         except ImportError:
-            pass
+            hasSound = False
 
     if not args.words:
         try:
@@ -158,13 +159,15 @@ def main():
                 line = raw_input('>> ')
                 keyword = line.strip()
                 if len(keyword):
-                    t.uri = BaseDict.soundUri(keyword)
+                    if hasSound:
+                        t.uri = BaseDict.soundUri(keyword)
                     thread(keyword)
         except (EOFError, KeyboardInterrupt, SystemExit):
             pass
     else:
         keyword = ' '.join(args.words)
-        t.uri = BaseDict.soundUri(keyword)
+        if hasSound:
+            t.uri = BaseDict.soundUri(keyword)
         thread(keyword)
 
     readline.write_history_file(histfile)
