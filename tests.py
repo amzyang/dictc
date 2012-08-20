@@ -56,6 +56,7 @@ class BaseDictTest(unittest.TestCase):
         self.assertTupleEqual((False, ''), base_dict.getOutput())
 
     def tearDown(self):
+        # TODO: django is missing?
         import django.utils.html
         reload(django.utils.html)
 
