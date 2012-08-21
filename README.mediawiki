@@ -15,7 +15,7 @@
 
 环境依赖：
 
-:python + linux
+:python 2.7 + linux
 
 :gstreamer 的 python 绑定:
 
