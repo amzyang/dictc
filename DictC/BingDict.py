@@ -304,6 +304,8 @@ class BingDict(BaseDict):
             return []
         suggs = self.data['SUGGS']['PH']['I']
         lines = [u'\n推荐']
+        if not isinstance(suggs, list):
+            suggs = [suggs]
         for item in suggs:
             lines.append("\t%s" % item['$'])
             lines.append("\t%s\n" % item['$DEF'])
