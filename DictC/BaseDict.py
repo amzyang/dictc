@@ -5,6 +5,7 @@ try:
     from django.utils.html import strip_tags
 except ImportError:
     import re
+
     def strip_tags(text):
         return re.sub(r'<[^>]*?>', '', text)
 
@@ -26,6 +27,8 @@ class BaseDict(object):
 
     @staticmethod
     def soundUri(keyword):
+        # gstatic = "https://www.gstatic.com/dictionary/static/sounds/de/0/"
+        # return "%s%s.mp3" % (gstatic, keyword)
         return "http://dict.youdao.com/dictvoice?%s" % urlencode({'audio':
                                                                   keyword})
 
