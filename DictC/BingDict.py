@@ -34,11 +34,11 @@ class BingDict(BaseDict):
                    'Host': 'dict.bing.com.cn',
                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
         params = urlencode({'q': keyword, 't': 'sug', 'tlang': 'EN-US',
-                                   'ulang': 'ZH-CN', 'ut': 6})
+                            'ulang': 'ZH-CN', 'ut': 6})
         conn.request('POST',
-                '/io.aspx',
-                params,
-                headers=headers)
+                     '/io.aspx',
+                     params,
+                     headers=headers)
         r = conn.getresponse()
         if r.status == 200:
             data = simplejson.loads(r.read())
@@ -88,12 +88,12 @@ class BingDict(BaseDict):
                    'Host': 'dict.bing.com.cn',
                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
         params = urlencode({'q': self.keyword, 't': 'dict', 'tlang':
-                                   'EN-US',
-                                   'ulang': 'ZH-CN', 'ut': 'default'})
+                            'EN-US',
+                            'ulang': 'ZH-CN', 'ut': 'default'})
         conn.request('POST',
-                '/io.aspx',
-                params,
-                headers=headers)
+                     '/io.aspx',
+                     params,
+                     headers=headers)
         r = conn.getresponse()
         if r.status == 200:
             data = simplejson.loads(r.read())
@@ -187,19 +187,20 @@ class BingDict(BaseDict):
         """
         if not 'DEF' in self.data:
             return []
-        maxs = []
+        maximums = []
         sens = []
         lines = [u'\n解释']
         for item in self.data['DEF']:
             if not 'SENS' in item:
                 continue
             if isinstance(item['SENS'], list):
-                maxs.append(max([len(sen['$POS']) for sen in item['SENS']]))
+                maximums.append(max([len(sen['$POS']) for sen in
+                                     item['SENS']]))
                 sens.extend(item['SENS'])
             else:
-                maxs.append(len(item['SENS']['$POS']))
+                maximums.append(len(item['SENS']['$POS']))
                 sens.append(item['SENS'])
-        widest = max(maxs)
+        widest = max(maximums)
         for idx, sen in enumerate(sens):
             if isinstance(sen['SEN'], list):
                 explains = [s['D']['$'] for s in sen['SEN']]
