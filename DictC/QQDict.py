@@ -138,7 +138,7 @@ class QQDict(BaseDict):
         if 'ph' in base:
             lines.append(u'\n\n词组')
             ph = base['ph']
-            length = self._lengest(ph) + 3
+            length = self._longest(ph) + 3
             for word in ph:
                 w = []
                 if 'phs' in word:
@@ -150,7 +150,7 @@ class QQDict(BaseDict):
 
         return lines
 
-    def _lengest(self, ph):
+    def _longest(self, ph):
         return max([len(word['phs'].strip()) for word in ph if 'phs' in word])
 
     def _process_sen(self, base):
