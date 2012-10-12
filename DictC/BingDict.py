@@ -187,13 +187,13 @@ class BingDict(BaseDict):
         """
         if not 'DEF' in self.data:
             return []
-        maximums = []
+        maximums = [0]
         sens = []
         lines = [u'\n解释']
         for item in self.data['DEF']:
             if not 'SENS' in item:
                 continue
-            if isinstance(item['SENS'], list):
+            if isinstance(item['SENS'], list) and item['SENS']:
                 maximums.append(max([len(sen['$POS']) for sen in
                                      item['SENS']]))
                 sens.extend(item['SENS'])
@@ -238,6 +238,8 @@ class BingDict(BaseDict):
         ph = self.data['PHRASES']['PH']
         if not isinstance(ph, list):
             ph = [ph]
+        if not ph:  # empty list
+            return []
         widest = max([len(pair['$T'].strip()) for pair in ph])
         lines = [u'\n短语']
         for pair in ph:
