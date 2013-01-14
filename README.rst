@@ -83,7 +83,7 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 截图
 -----
 
-.. image:: assets/dictc.jpeg
+.. image:: dictc/assets/dictc.jpeg
 
 待办项
 --------
