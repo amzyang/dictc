@@ -2,14 +2,6 @@
 dictc 简单的在线查询单词小工具！
 ==============================================
 
-:date: 2012-12-02 14:52
-:tags: python,cli
-:category: 20%
-:slug: dictc
-:author: zyang
-:summary: 一个简单的在线查询单词小工具，支持多个在线词典服务！
-
-
 .. role:: raw-html(raw)
    :format: html
 
@@ -91,7 +83,7 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 截图
 -----
 
-.. image:: static/images/dictc.jpeg
+.. image:: assets/dictc.jpeg
 
 待办项
 --------
