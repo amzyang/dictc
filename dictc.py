@@ -149,8 +149,8 @@ def main():
         except ImportError:
             hasSound = False
 
-    if not args.words:
-        try:
+    try:
+        if not args.words:
             print 'Press <Ctrl-D> or <Ctrl-C> to exit!'
             completer = Completer()
             readline.set_completer(completer.complete)
@@ -162,13 +162,13 @@ def main():
                     if hasSound:
                         t.uri = BaseDict.soundUri(keyword)
                     thread(keyword)
-        except (EOFError, KeyboardInterrupt, SystemExit):
-            pass
-    else:
-        keyword = ' '.join(args.words)
-        if hasSound:
-            t.uri = BaseDict.soundUri(keyword)
-        thread(keyword)
+        else:
+            keyword = ' '.join(args.words)
+            if hasSound:
+                t.uri = BaseDict.soundUri(keyword)
+            thread(keyword)
+    except (EOFError, KeyboardInterrupt, SystemExit):
+        pass
 
     readline.write_history_file(histfile)
 
