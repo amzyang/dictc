@@ -30,7 +30,7 @@ class BingDict(BaseDict):
     def fetchSuggestion(keyword):
         keyword = keyword.strip()
         conn = httplib.HTTPConnection('dict.bing.com.cn', timeout=2)
-        headers = {'Referer': 'http://dict.bing.com.cn/?FORM=BNGCN',
+        headers = {'Referer': 'http://dict.bing.com.cn/',
                    'Host': 'dict.bing.com.cn',
                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
         params = urlencode({'q': keyword, 't': 'sug', 'tlang': 'EN-US',
