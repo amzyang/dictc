@@ -11,7 +11,7 @@ import threading
 from DictC.BaseDict import BaseDict
 from DictC.QQDict import QQDict
 from DictC.DictCnDict import DictCnDict
-from DictC.BingDict import BingDict as BingDict
+from DictC.BingDict import BingDict
 import unicodedata
 import argparse
 
