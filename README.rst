@@ -12,9 +12,10 @@ dictc 简单的在线查询单词小工具！
 主要功能
 ---------
 
-- 支持多个在线词典服务
+- 支持多个在线词典服务及星际译王词典
   `qq 词典 <http://dict.qq.com>`_
   `bing 词典 <http://dict.bing.com.cn>`_
+  `stardict 词典 <http://www.stardict.org>`_
 
 - 支持交互模式下按 :key:`Tab` 自动补全单词，支持在 bash/zsh 命令行下用 :key:`Tab` 补全参数及选项
 - 发音支持
@@ -60,7 +61,7 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 ::
 
      -h, --help           显示帮助信息
-     -d dictionary        词典（默认：qq）：qq,bing
+     -d dictionary        词典（默认：qq）：qq,bing,stardict
      -c completion        自动补全（默认：qq）：qq,bing,dictcn
      --nosound            禁用发音（默认：启用）
      -v, --version        显示版本信息

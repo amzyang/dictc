@@ -10,7 +10,7 @@ _dictc()
             return
             ;;
         -d)
-            COMPREPLY=( $( compgen -W 'qq bing' -- "$cur" ) )
+            COMPREPLY=( $( compgen -W 'qq bing stardict' -- "$cur" ) )
             return
             ;;
         -c)

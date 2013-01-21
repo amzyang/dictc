@@ -12,6 +12,7 @@ from DictC.BaseDict import BaseDict
 from DictC.QQDict import QQDict
 from DictC.DictCnDict import DictCnDict
 from DictC.BingDict import BingDict
+from DictC.StarDict import StarDict
 import unicodedata
 import argparse
 
@@ -48,7 +49,10 @@ class FetchThread(threading.Thread):
         self.keyword = keyword
 
     def run(self):
-        userdict = Dict()
+        global dict_instance
+        if dict_instance is None:
+            dict_instance = Dict()
+        userdict = dict_instance
         userdict.setKeyword(self.keyword)
         status, content = userdict.getOutput()
         link = Dict.getLink(self.keyword)
@@ -135,7 +139,7 @@ def thread(keyword):
 
 
 def main():
-    histfile = "%s/dict_qq_history_py" % tempfile.gettempdir()
+    histfile = "%s/dictc_history_py" % tempfile.gettempdir()
     if (os.path.exists(histfile)):
         readline.read_history_file(histfile)
     hasSound = not args.nosound
@@ -174,14 +178,22 @@ def main():
 
 
 if __name__ == "__main__":
-    dict_services = (QQDict, BingDict)
-    completion_services = (QQDict, BingDict, DictCnDict)
 
     class CLIAction(argparse.Action):
+
+        services = (QQDict, BingDict, StarDict)
+
+        def __init__(self, *args, **kwargs):
+            super(CLIAction, self).__init__(*args, **kwargs)
+
         def __call__(self, parser, namespace, values, option_string=None):
             for service in self.services:
                 if service.metadata['id'] == values:
                     return setattr(namespace, self.dest, service)
+
+    class CompletionAction(CLIAction):
+
+        services = (QQDict, BingDict, DictCnDict)
 
     description = u'一个简单的在线查询单词小工具！'
     epilog = u"""
@@ -189,9 +201,10 @@ if __name__ == "__main__":
 
     主要功能：
 
-    - 支持多个在线词典服务
-      qq    dict.qq.com
-      bing  dict.bing.com.cn
+    - 支持多个在线词典服务及星际译王词典
+      qq        dict.qq.com
+      bing      dict.bing.com.cn
+      stardict  星际译王
     - 支持交互式模式下按<Tab>自动补全
       qq,bing,dictcn(dict.cn)
     - 发音支持
@@ -220,7 +233,6 @@ if __name__ == "__main__":
     formatter_class = argparse.RawDescriptionHelpFormatter
     parser = argparse.ArgumentParser(description=description, epilog=epilog,
                                      formatter_class=formatter_class)
-    CLIAction.services = dict_services
     parser.add_argument('-d', nargs='?',
                         help=u'词典（默认：qq）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
@@ -232,17 +244,16 @@ if __name__ == "__main__":
                         choices=map(lambda d: d.metadata['id'],
                                     CLIAction.services),
                         )
-    CLIAction.services = completion_services
     parser.add_argument('-c', nargs='?',
                         help=u'自动补全（默认：qq）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
-                                     CLIAction.services)),
+                                     CompletionAction.services)),
                         metavar=u'completion',
                         dest='sugg',
-                        action=CLIAction,
-                        default=CLIAction.services[0],
+                        action=CompletionAction,
+                        default=CompletionAction.services[0],
                         choices=map(lambda s: s.metadata['id'],
-                                    CLIAction.services),
+                                    CompletionAction.services),
                         )
     parser.add_argument('--nosound', help=u'禁用发音（默认启用）', dest='nosound',
                         action='store_true', default=False)
@@ -254,6 +265,8 @@ if __name__ == "__main__":
 
     Dict = args.dict
     Sugg = args.sugg
+
+    dict_instance = None
 
     main()
 
