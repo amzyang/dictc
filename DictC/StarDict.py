@@ -2,14 +2,10 @@
 # -*- coding: utf-8 -*-
 import gzip
 import struct
-import ConfigParser
 from collections import deque
 from BaseDict import BaseDict
 from os import listdir
-from os.path import (
-    isfile,
-    expanduser
-)
+from os.path import expanduser
 
 
 class StarDict(BaseDict):
@@ -55,37 +51,6 @@ class StarDict(BaseDict):
 
             dic_file = gzip.open("%s/%s.dict.dz" % (dic, basename), "rb")
             dicts[basename]['dict'] = dic_file
-
-    def soundUri(self, keyword):
-        # WyabdcRealPeopleTTS/a/ad.wav
-        # OtdRealPeopleTTS/a/ad.wav
-        cfg_path = expanduser("~/.stardict/stardict.cfg")
-        if isfile(cfg_path):
-            config = ConfigParser.ConfigParser()
-            config.read(cfg_path)
-            cfg_path = config.get("/apps/stardict/preferences/dictionary",
-                                  "tts_path")
-            cfg_path = expanduser(cfg_path)
-        paths = ['~/.stardict/OtdRealPeopleTTS',
-                    '~/.stardict/WyabdcRealPeopleTTS',
-                    '/usr/share/WyabdcRealPeopleTTS',
-                    '/usr/share/OtdRealPeopleTTS']
-        paths = map(expanduser, paths)
-        paths.remove(cfg_path)
-        paths.insert(0, cfg_path)
-        file_func = lambda keyword, path: isfile("%s/%s/%s" % (path,
-                                                               keyword[0],
-                                                               keyword))
-        audio = False
-        for path in paths:
-            part = file_func(path, keyword)
-            if isfile("%s.wav" % part):
-                audio = "%s.wav" % part
-                break
-            if isfile("%s.mp3" % part):
-                audio = "%s.mp3" % part
-                break
-        return audio
 
     @staticmethod
     def getLink(keyword):
