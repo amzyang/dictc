@@ -14,7 +14,7 @@ _dictc()
             return
             ;;
         -c)
-            COMPREPLY=( $( compgen -W 'qq bing dictcn' -- "$cur" ) )
+            COMPREPLY=( $( compgen -W 'qq bing dictcn spellcheck' -- "$cur" ) )
             return
             ;;
     esac

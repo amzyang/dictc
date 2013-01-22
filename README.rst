@@ -62,7 +62,7 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 
      -h, --help           显示帮助信息
      -d dictionary        词典（默认：qq）：qq,bing,stardict
-     -c completion        自动补全（默认：qq）：qq,bing,dictcn
+     -c completion        自动补全（默认：qq）：qq,bing,dictcn,spellcheck
      --nosound            禁用发音（默认：启用）
      -v, --version        显示版本信息
 

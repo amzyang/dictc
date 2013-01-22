@@ -3,7 +3,7 @@
 _arguments -A "-*" \
 	'(- : *)'{-h,--help}'[show this help message and exit]' \
 	'(- : *)'{-v,--version}"[show program's version number and exit]" \
-	-c'[choose completion service]:completion:((qq bing dictcn))' \
+	-c'[choose completion service]:completion:((qq bing dictcn spellcheck))' \
 	-d'[choose dictionary]:dictionary:((qq bing stardict))' \
 	--nosound'[disable sound support]' \
 	'*: :_files'

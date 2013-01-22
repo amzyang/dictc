@@ -13,6 +13,7 @@ from DictC.QQDict import QQDict
 from DictC.DictCnDict import DictCnDict
 from DictC.BingDict import BingDict
 from DictC.StarDict import StarDict
+from DictC.SpellCheck import SpellCheck
 import unicodedata
 import argparse
 
@@ -75,7 +76,7 @@ class Completer(threading.Thread):
         if prefix in self.caches:
             try:
                 w, t = self.caches[prefix][index]
-                if not t.strip():
+                if not t.strip() or w.strip() == t.strip():
                     return w
                 else:
                     return self.format_string % (w, t)
@@ -89,10 +90,8 @@ class Completer(threading.Thread):
                 return None
             self.words = words
             # we have a new prefix!
-            # find all words that start with this prefix
             self.matching_words = [
-                (w.encode('utf8'), t.encode('utf8')) for w, t in self.words if
-                w.encode('utf8').lower().startswith(prefix.lower())
+                (w.encode('utf8'), t.encode('utf8')) for w, t in self.words
             ]
             widest = max([width(w.decode('utf8')) for w, t in
                           self.matching_words])
@@ -103,7 +102,7 @@ class Completer(threading.Thread):
             self.caches[prefix] = self.matching_words
         try:
             w, t = self.matching_words[index]
-            if not t.strip():
+            if not t.strip() or t.strip() == w.strip():
                 return w
             else:
                 return self.format_string % (w, t)
@@ -193,7 +192,7 @@ if __name__ == "__main__":
 
     class CompletionAction(CLIAction):
 
-        services = (QQDict, BingDict, DictCnDict)
+        services = (QQDict, BingDict, DictCnDict, SpellCheck)
 
     description = u'一个简单的在线查询单词小工具！'
     epilog = u"""
@@ -206,7 +205,7 @@ if __name__ == "__main__":
       bing      dict.bing.com.cn
       stardict  星际译王
     - 支持交互式模式下按<Tab>自动补全
-      qq,bing,dictcn(dict.cn)
+      qq,bing,dictcn(dict.cn),spellcheck(拼写检查)
     - 发音支持
       需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
 
