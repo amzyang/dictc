@@ -65,15 +65,15 @@ class BaseDict(object):
             audio = False
             for path in paths:
                 part = file_func(keyword, path)
-                if isfile("%s.wav" % part):
-                    audio = "%s.wav" % part
-                    break
                 if isfile("%s.mp3" % part):
                     audio = "%s.mp3" % part
                     break
+                if isfile("%s.wav" % part):
+                    audio = "%s.wav" % part
+                    break
             if not audio:
                 return False
-            return "file:///%s" % audio
+            return "file://%s" % audio
 
         uri = local(keyword)
 
