@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import enchant
+"""提供基于拼写检查的自动补全
+"""
+try:
+    import enchant
+except ImportError:
+    import sys
+    print >> sys.stderr, 'python enchant 模块不存在！'
 from DictC.BaseDict import BaseDict
 
 
