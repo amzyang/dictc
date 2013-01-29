@@ -54,8 +54,10 @@ class BaseDict(object):
                 cfg_path = expanduser(cfg_path)
             paths = ['~/.stardict/OtdRealPeopleTTS',
                         '~/.stardict/WyabdcRealPeopleTTS',
+                        '~/.stardict/voice',
                         '/usr/share/WyabdcRealPeopleTTS',
-                        '/usr/share/OtdRealPeopleTTS']
+                        '/usr/share/OtdRealPeopleTTS',
+                        '/usr/share/voice']
             paths = map(expanduser, paths)
             paths.remove(cfg_path)
             paths.insert(0, cfg_path)
