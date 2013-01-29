@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # @TODO: replace raw_input by cmd module
 # @TODO: 在键盘中断时关闭线程
+# @TODO: stardict is too slow
 import subprocess
 import tempfile
 import os
@@ -141,6 +142,9 @@ def main():
     histfile = "%s/dictc_history_py" % tempfile.gettempdir()
     if (os.path.exists(histfile)):
         readline.read_history_file(histfile)
+    readline.parse_and_bind("set completion-ignore-case on")
+    readline.parse_and_bind("set completion-map-case on")
+    readline.parse_and_bind("set skip-completed-text on")
     hasSound = not args.nosound
     if hasSound:
         try:
@@ -156,6 +160,8 @@ def main():
         if not args.words:
             print 'Press <Ctrl-D> or <Ctrl-C> to exit!'
             completer = Completer()
+            # @TODO: spellcheck doesn't work well
+            # "compl"
             readline.set_completer(completer.complete)
             readline.set_completer_delims('')
             while True:
