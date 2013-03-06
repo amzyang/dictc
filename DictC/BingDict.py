@@ -278,6 +278,7 @@ class BingDict(BaseDict):
         if not 'SENTS' in self.data or not 'SEN' in self.data['SENTS']:
             return []
         sen = self.data['SENTS']['SEN']
+        sen = sen if isinstance(sen, list) else [sen]
         lines = [u'\n例句']
         for sent in sen:
             lines.append("\n\t%s" % self._clean(sent['EN']['D']['$']))
