@@ -48,18 +48,19 @@ class SoundThread(threading.Thread):
 
 
 class FetchThread(threading.Thread):
-    def __init__(self, keyword):
+    def __init__(self, keyword, args):
         threading.Thread.__init__(self)
         self.keyword = keyword
+        self.args = args
 
     def run(self):
         global dict_instance
         if dict_instance is None:
-            dict_instance = Dict()
-        userdict = dict_instance
-        userdict.setKeyword(self.keyword)
-        status, content = userdict.getOutput()
-        link = Dict.getLink(self.keyword)
+            class_object = self.args['dict']
+            dict_instance = class_object()
+        dict_instance.setKeyword(self.keyword)
+        status, content = dict_instance.getOutput()
+        link = dict_instance.getLink(self.keyword)
         if status:
             content += "\n\n%s" % link
             output(content)
@@ -69,11 +70,12 @@ class FetchThread(threading.Thread):
 
 
 class Completer(threading.Thread):
-    def __init__(self):
+    def __init__(self, args):
         threading.Thread.__init__(self)
         self.prefix = None
         self.caches = {}
         self.format_string = "%s  %s"
+        self.args = args
 
     def complete(self, prefix, index):
         if prefix in self.caches:
@@ -88,7 +90,7 @@ class Completer(threading.Thread):
             except KeyError:
                 return None
         if not prefix in self.caches or prefix != self.prefix:
-            words = Sugg.fetchSuggestion(prefix)
+            words = self.args['sugg'].fetchSuggestion(prefix)
             if not len(words):
                 return None
             self.words = words
@@ -133,75 +135,14 @@ def output(content):
         print content
 
 
-def thread(keyword):
-    f = FetchThread(keyword)
+def thread(keyword, args):
+    f = FetchThread(keyword, args)
     f.setDaemon(True)
     f.start()
     f.join()
 
 
-def main():
-    histfile = "%s/dictc_history_py" % tempfile.gettempdir()
-    if (os.path.exists(histfile)):
-        readline.read_history_file(histfile)
-    readline.parse_and_bind("set completion-ignore-case on")
-    readline.parse_and_bind("set completion-map-case on")
-    readline.parse_and_bind("set skip-completed-text on")
-    hasSound = not args.nosound
-    if hasSound:
-        try:
-            from DictC.Sound import Sound  # @hack
-            s = Sound()
-            t = SoundThread(s)
-            t.setDaemon(True)
-            t.start()
-        except ImportError:
-            hasSound = False
-
-    try:
-        if not args.words:
-            print 'Press <Ctrl-D> or <Ctrl-C> to exit!'
-            completer = Completer()
-            # @TODO: spellcheck doesn't work well
-            # "compl"
-            readline.set_completer(completer.complete)
-            readline.set_completer_delims('')
-            while True:
-                line = raw_input('>> ')
-                keyword = line.strip()
-                if len(keyword):
-                    if hasSound:
-                        t.uri = BaseDict.soundUri(keyword)
-                    thread(keyword)
-        else:
-            keyword = ' '.join(args.words)
-            if hasSound:
-                t.uri = BaseDict.soundUri(keyword)
-            thread(keyword)
-    except (EOFError, KeyboardInterrupt, SystemExit):
-        pass
-
-    readline.write_history_file(histfile)
-
-
-if __name__ == "__main__":
-
-    class CLIAction(argparse.Action):
-
-        services = (QQDict, BingDict, StarDict)
-
-        def __init__(self, *args, **kwargs):
-            super(CLIAction, self).__init__(*args, **kwargs)
-
-        def __call__(self, parser, namespace, values, option_string=None):
-            for service in self.services:
-                if service.metadata['id'] == values:
-                    return setattr(namespace, self.dest, service)
-
-    class CompletionAction(CLIAction):
-
-        services = (QQDict, BingDict, DictCnDict, SpellCheck)
-
+def get_parser():
     description = u'一个简单的在线查询单词小工具！'
     epilog = u"""
     当前版本：0.1.1
@@ -268,14 +209,75 @@ if __name__ == "__main__":
                         version='%(prog)s 0.1.1')
     parser.add_argument('words', metavar='keyword or sentence', type=str,
                         nargs='*')
-    args = parser.parse_args()
+    return parser
 
-    Dict = args.dict
-    Sugg = args.sugg
+
+def command_line_runner():
+    parser = get_parser()
+    args = vars(parser.parse_args())
+    histfile = "%s/dictc_history_py" % tempfile.gettempdir()
+    if (os.path.exists(histfile)):
+        readline.read_history_file(histfile)
+    hasSound = not args['nosound']
+    if hasSound:
+        try:
+            from DictC.Sound import Sound  # @hack
+            s = Sound()
+            t = SoundThread(s)
+            t.setDaemon(True)
+            t.start()
+        except ImportError:
+            hasSound = False
+
+    try:
+        if not args['words']:
+            print 'Press <Ctrl-D> or <Ctrl-C> to exit!'
+            completer = Completer(args)
+            # @TODO: spellcheck doesn't work well
+            # "compl"
+            readline.parse_and_bind("set completion-ignore-case on")
+            readline.parse_and_bind("set completion-map-case on")
+            readline.parse_and_bind("set skip-completed-text on")
+            readline.set_completer(completer.complete)
+            readline.set_completer_delims('')
+            while True:
+                line = raw_input('>> ')
+                keyword = line.strip()
+                if len(keyword):
+                    if hasSound:
+                        t.uri = BaseDict.soundUri(keyword)
+                    thread(keyword, args)
+        else:
+            keyword = ' '.join(args['words'])
+            if hasSound:
+                t.uri = BaseDict.soundUri(keyword)
+            thread(keyword, args)
+    except (EOFError, KeyboardInterrupt, SystemExit):
+        pass
+
+    readline.write_history_file(histfile)
+
+
+if __name__ == "__main__":
+
+    class CLIAction(argparse.Action):
+
+        services = (QQDict, BingDict, StarDict)
+
+        def __init__(self, *args, **kwargs):
+            super(CLIAction, self).__init__(*args, **kwargs)
+
+        def __call__(self, parser, namespace, values, option_string=None):
+            for service in self.services:
+                if service.metadata['id'] == values:
+                    return setattr(namespace, self.dest, service)
+
+    class CompletionAction(CLIAction):
+
+        services = (QQDict, BingDict, DictCnDict, SpellCheck)
 
     dict_instance = None
-
-    main()
+    command_line_runner()
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 textwidth=79
