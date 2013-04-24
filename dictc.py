@@ -9,12 +9,14 @@ import os
 import sys
 import readline
 import threading
-from DictC.BaseDict import BaseDict
-from DictC.QQDict import QQDict
-from DictC.DictCnDict import DictCnDict
-from DictC.BingDict import BingDict
-from DictC.StarDict import StarDict
-from DictC.SpellCheck import SpellCheck
+from DictC import (
+    BaseDict,
+    QQDict,
+    DictCnDict,
+    BingDict,
+    StarDict,
+    SpellCheck,
+)
 import unicodedata
 import argparse
 
