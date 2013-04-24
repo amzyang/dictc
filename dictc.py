@@ -250,6 +250,7 @@ def command_line_runner():
                     thread(keyword, args)
         else:
             keyword = ' '.join(args['words'])
+            readline.add_history(keyword)
             if hasSound:
                 t.uri = BaseDict.soundUri(keyword)
             thread(keyword, args)
