@@ -238,6 +238,7 @@ def command_line_runner():
             readline.parse_and_bind("set completion-ignore-case on")
             readline.parse_and_bind("set completion-map-case on")
             readline.parse_and_bind("set skip-completed-text on")
+            readline.parse_and_bind("tab: complete")
             readline.set_completer(completer.complete)
             readline.set_completer_delims('')
             while True:
