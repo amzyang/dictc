@@ -45,13 +45,6 @@ class BaseDict(object):
         def local(keyword):
             # WyabdcRealPeopleTTS/a/ad.wav
             # OtdRealPeopleTTS/a/ad.wav
-            cfg_path = expanduser("~/.stardict/stardict.cfg")
-            if isfile(cfg_path):
-                config = ConfigParser.ConfigParser()
-                config.read(cfg_path)
-                cfg_path = config.get("/apps/stardict/preferences/dictionary",
-                                      "tts_path")
-                cfg_path = expanduser(cfg_path)
             paths = ['~/.stardict/OtdRealPeopleTTS',
                         '~/.stardict/WyabdcRealPeopleTTS',
                         '~/.stardict/voice',
@@ -59,8 +52,20 @@ class BaseDict(object):
                         '/usr/share/OtdRealPeopleTTS',
                         '/usr/share/voice']
             paths = map(expanduser, paths)
-            paths.remove(cfg_path)
-            paths.insert(0, cfg_path)
+            cfg_path = expanduser("~/.stardict/stardict.cfg")
+            if isfile(cfg_path):
+                config = ConfigParser.ConfigParser()
+                config.read(cfg_path)
+                tts_path = None
+                try:
+                    tts_path = config.get(
+                        "/apps/stardict/preferences/dictionary", "tts_path")
+                    tts_path = expanduser(tts_path)
+                    paths.remove(tts_path)
+                finally:
+                    if tts_path:
+                        paths.insert(0, tts_path)
+
             file_func = lambda keyword, path: expanduser("%s/%s/%s" % (path,
                                                                    keyword[0],
                                                                    keyword))
