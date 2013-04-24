@@ -3,6 +3,14 @@
 from distutils.core import setup
 
 
+def extra_dependencies():
+    import sys
+    ret = []
+    if sys.version_info < (2, 7):
+        ret.append('argparse')
+    return ret
+
+
 setup(
     name='dictc',
     version='0.1.1',
@@ -26,7 +34,8 @@ setup(
     qq/bing/dict(dict.cn)/spellcheck(拼写检查)
     - 发音支持
     需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
-    """
+    """,
+    install_requires=extra_dependencies()
 )
 
 
