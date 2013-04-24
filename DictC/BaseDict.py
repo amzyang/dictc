@@ -66,17 +66,16 @@ class BaseDict(object):
                     if tts_path:
                         paths.insert(0, tts_path)
 
-            file_func = lambda keyword, path: expanduser("%s/%s/%s" % (path,
-                                                                   keyword[0],
-                                                                   keyword))
+            get_filename_without_extension = lambda keyword, path: expanduser(
+                "%s/%s/%s" % (path, keyword[0], keyword))
             audio = False
             for path in paths:
-                part = file_func(keyword, path)
-                if isfile("%s.mp3" % part):
-                    audio = "%s.mp3" % part
+                base = get_filename_without_extension(keyword, path)
+                if isfile("%s.mp3" % base):
+                    audio = "%s.mp3" % base
                     break
-                if isfile("%s.wav" % part):
-                    audio = "%s.wav" % part
+                if isfile("%s.wav" % base):
+                    audio = "%s.wav" % base
                     break
             if not audio:
                 return False
