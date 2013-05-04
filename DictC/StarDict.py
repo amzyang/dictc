@@ -25,9 +25,9 @@ class StarDict(BaseDict):
         dic_path = []
         for basedir in basedirs:
             _dic_path = listdir(expanduser(basedir))
-            _dic_path = map(lambda dirname: expanduser("%s/%s" % (basedir,
-                                                                 dirname)),
-                           _dic_path)
+            _dic_path = map(
+                lambda dirname: expanduser("%s/%s" % (basedir, dirname)),
+                _dic_path)
             dic_path.extend(_dic_path)
         for dic in dic_path:
             filenames = listdir(dic)
