@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 import gzip
 import struct
-from collections import deque
+from ctypes import (
+    CDLL,
+    c_int,
+    POINTER,
+)
 from BaseDict import BaseDict
 from os import listdir
 from os.path import expanduser
@@ -17,9 +21,14 @@ class StarDict(BaseDict):
     dicts = {}
 
     _MAX_KEYWORD_LENGTH = 255
+    _size = struct.calcsize('!ll')
 
     def __init__(self):
         super(StarDict, self).__init__()
+
+        libstardict = CDLL('./DictC/libstardict.so')
+        self.parse_idx = libstardict.parse_idx
+
         dicts = self.dicts
         basedirs = ["~/.stardict/dic", "/usr/share/stardict/dic"]
         dic_path = []
@@ -45,7 +54,7 @@ class StarDict(BaseDict):
             dicts[basename]['ifo'] = ifo
             dic_idx = open("%s/%s.idx" % (dic, basename), "rb")
             dic_idx_data = dic_idx.read()
-            idxs = self._read_idx(dic_idx_data)
+            idxs = self._read_idx(dic_idx_data, ifo)
             dicts[basename]['idx'] = idxs
             dicts[basename]['idx_data'] = dic_idx_data
 
@@ -102,17 +111,14 @@ class StarDict(BaseDict):
                 ifo[key] = val
         return ifo
 
-    def _read_idx(self, data):
-        index_file_len = len(data)
-        pos = 0
-        size = struct.calcsize('!ll')
-        idxs = deque()
-        while pos < index_file_len:
-            while data[pos] != '\0':
-                pos += 1
-            pos += size + 1
-            idxs.append(pos)
-        return idxs
+    def _read_idx(self, data, ifo):
+        count = int(ifo['wordcount'])
+        filesize = int(ifo['idxfilesize'])
+
+        parse_idx = self.parse_idx
+        parse_idx.restype = POINTER(c_int * count)
+        contents = parse_idx(data, filesize, count, self._size).contents
+        return tuple(contents)
 
     def _stardict_bin_find(self, idxs, data):
         low = 0
@@ -139,7 +145,7 @@ class StarDict(BaseDict):
 
     def _block_to_list(self, string):
         fmt = '!ll'
-        size = struct.calcsize(fmt)
+        size = self._size
         sep = len(string) - size - 1
         word = string[0:sep]
         offset, size = struct.unpack(fmt, string[sep + 1:])
