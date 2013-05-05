@@ -9,7 +9,11 @@ from ctypes import (
 )
 from BaseDict import BaseDict
 from os import listdir
-from os.path import expanduser
+from os.path import (
+    expanduser,
+    isdir,
+    exists,
+)
 
 
 class StarDict(BaseDict):
@@ -33,6 +37,8 @@ class StarDict(BaseDict):
         basedirs = ["~/.stardict/dic", "/usr/share/stardict/dic"]
         dic_path = []
         for basedir in basedirs:
+            if not exists(basedir) or not isdir(basedir):
+                continue
             _dic_path = listdir(expanduser(basedir))
             _dic_path = map(
                 lambda dirname: expanduser("%s/%s" % (basedir, dirname)),
