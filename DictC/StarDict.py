@@ -37,9 +37,10 @@ class StarDict(BaseDict):
         basedirs = ["~/.stardict/dic", "/usr/share/stardict/dic"]
         dic_path = []
         for basedir in basedirs:
-            if not exists(basedir) or not isdir(basedir):
+            expanded_basedir = expanduser(basedir)
+            if not exists(expanded_basedir) or not isdir(expanded_basedir):
                 continue
-            _dic_path = listdir(expanduser(basedir))
+            _dic_path = listdir(expanded_basedir)
             _dic_path = map(
                 lambda dirname: expanduser("%s/%s" % (basedir, dirname)),
                 _dic_path)
