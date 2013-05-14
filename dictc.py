@@ -16,6 +16,7 @@ from DictC import (
     BingDict,
     StarDict,
     SpellCheck,
+    External,
 )
 import unicodedata
 import argparse
@@ -154,7 +155,7 @@ def get_parser():
       bing      dict.bing.com.cn
       stardict  星际译王
     - 支持交互式模式下按<Tab>自动补全
-      qq,bing,dictcn(dict.cn),spellcheck(拼写检查)
+      qq,bing,dictcn(dict.cn),spellcheck(拼写检查),external(外部命令)
     - 发音支持
       需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
 
@@ -276,7 +277,7 @@ if __name__ == "__main__":
 
     class CompletionAction(CLIAction):
 
-        services = (QQDict, BingDict, DictCnDict, SpellCheck)
+        services = (QQDict, BingDict, DictCnDict, SpellCheck, External)
 
     dict_instance = None
     command_line_runner()
