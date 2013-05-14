@@ -17,7 +17,7 @@ class External(BaseDict):
         out, instream = popen2("%s %s" % (command, keyword))
         output = out.read()
         words = output.split("\n")
-        words = filter(lambda word: word, words)
+        words = filter(bool, words)
         return map(lambda word: (word, word), words)
 
     @staticmethod

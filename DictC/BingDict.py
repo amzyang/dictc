@@ -153,11 +153,11 @@ class BingDict(BaseDict):
                         if isinstance(parts['C'], list):
                             for words in parts['C']:
                                 lines.append('\t%s' %
-                                             ' '.join(filter(lambda x: x,
+                                             ' '.join(filter(bool,
                                                              words.values())))
                         else:
                             lines.append('\t%s' %
-                                         ' '.join(filter(lambda x: x,
+                                         ' '.join(filter(bool,
                                                          parts['C'].values())))
                 return lines
             else:
