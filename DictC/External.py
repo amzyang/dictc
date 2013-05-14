@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from BaseDict import BaseDict
-from popen2 import popen2
+import subprocess
 
 
 class External(BaseDict):
@@ -14,8 +14,9 @@ class External(BaseDict):
 
     @staticmethod
     def fetchSuggestion(keyword, command="look"):
-        out, instream = popen2("%s %s" % (command, keyword))
-        output = out.read()
+        if not keyword:
+            return []
+        output = subprocess.check_output([command, keyword])
         words = output.split("\n")
         words = filter(bool, words)
         return map(lambda word: (word, word), words)
