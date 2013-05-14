@@ -234,8 +234,6 @@ def command_line_runner():
         if not args['words']:
             print 'Press <Ctrl-D> or <Ctrl-C> to exit!'
             completer = Completer(args)
-            # @TODO: spellcheck doesn't work well
-            # "compl"
             readline.parse_and_bind("set show-all-if-ambiguous on")
             readline.parse_and_bind("set completion-ignore-case on")
             readline.parse_and_bind("set completion-map-case on")
