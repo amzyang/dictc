@@ -236,6 +236,7 @@ def command_line_runner():
             completer = Completer(args)
             # @TODO: spellcheck doesn't work well
             # "compl"
+            readline.parse_and_bind("set show-all-if-ambiguous on")
             readline.parse_and_bind("set completion-ignore-case on")
             readline.parse_and_bind("set completion-map-case on")
             readline.parse_and_bind("set skip-completed-text on")
