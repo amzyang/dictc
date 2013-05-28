@@ -9,6 +9,7 @@ from ctypes import (
 )
 from BaseDict import BaseDict
 from os import listdir
+import os.path
 from os.path import (
     expanduser,
     isdir,
@@ -26,11 +27,12 @@ class StarDict(BaseDict):
 
     _MAX_KEYWORD_LENGTH = 255
     _size = struct.calcsize('!ll')
+    _clib = 'libstardict.so'
 
     def __init__(self):
         super(StarDict, self).__init__()
 
-        libstardict = CDLL('./DictC/libstardict.so')
+        libstardict = CDLL(self.getCLib())
         self.parse_idx = libstardict.parse_idx
 
         dicts = self.dicts
@@ -67,6 +69,12 @@ class StarDict(BaseDict):
 
             dic_file = gzip.open("%s/%s.dict.dz" % (dic, basename), "rb")
             dicts[basename]['dict'] = dic_file
+
+    @staticmethod
+    def getCLib():
+        dl_dir = os.path.realpath(
+            os.path.join(os.path.dirname(__file__), '..'))
+        return os.path.join(dl_dir, StarDict._clib)
 
     @staticmethod
     def getLink(keyword):
