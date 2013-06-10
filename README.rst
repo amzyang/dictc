@@ -95,6 +95,8 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 * 支持 stardict 词典格式？
 * 使用本地真人语音库？
 * python enchant, spell check support????
+* bash 命令行单词补全
+* 在 zsh 下，添加基于单词拼写的补全
 
 相关链接
 ----------
