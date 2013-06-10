@@ -110,7 +110,7 @@ class QQDict(BaseDict):
             pieces = []
             for mor in base['mor']:
                 pieces.extend([v for k, v in mor.iteritems()])
-            lines.append(' '.join(pieces))
+            lines.append(BaseDict.html_entity_decode(' '.join(pieces)))
         return lines
 
     def _process_des(self, base):
