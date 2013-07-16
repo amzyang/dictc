@@ -114,7 +114,6 @@ class StarDict(BaseDict):
         explain = '\t' + explain
         explain = explain.replace("\n", "\n\t")
         return "%s\n\n%s" % (ifo['bookname'], explain)
-        return None
 
     def _read_ifo(self, ifo_filename):
         file = open(ifo_filename, "rb")
