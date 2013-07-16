@@ -121,10 +121,9 @@ class StarDict(BaseDict):
             #: hacky
             position = explain.find('\x00t')
             if position >= 0:
-                explain = explain.replace('\x00t', "[", 1)
-                explain = explain.replace('\x00m', "]\n", 1)
-            explain = explain.replace('\x00t', "")
-            explain = explain.replace('\x00m', "\n")
+                explain = \
+                    explain.replace('\x00t', "[", 1).replace('\x00m', "]\n", 1)
+            explain = explain.replace('\x00t', "").replace('\x00m', "\n")
         explain = '\t' + explain
         explain = explain.replace("\n", "\n\t")
         return "%s\n\n%s" % (ifo['bookname'], explain)
