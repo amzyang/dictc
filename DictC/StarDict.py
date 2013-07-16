@@ -103,14 +103,28 @@ class StarDict(BaseDict):
         if item is None:
             return None
         word, offset, size = item
+        sametypesequence = ifo.get('sametypesequence')
+        if sametypesequence is None:
+            #: hacky
+            offset = offset - 1
+            size = size + 2
         dic_file.seek(offset)
         explain = dic_file.read(size)
-        if ifo.get('sametypesequence') == "tm":
+
+        if sametypesequence == "tm":
             type, detail = explain.split('\0')
             if type:
                 explain = "[%s]\n%s" % (type, detail)
             else:
                 explain = detail
+        elif sametypesequence is None:
+            #: hacky
+            position = explain.find('\x00t')
+            if position >= 0:
+                explain = explain.replace('\x00t', "[", 1)
+                explain = explain.replace('\x00m', "]\n", 1)
+            explain = explain.replace('\x00t', "")
+            explain = explain.replace('\x00m', "\n")
         explain = '\t' + explain
         explain = explain.replace("\n", "\n\t")
         return "%s\n\n%s" % (ifo['bookname'], explain)
