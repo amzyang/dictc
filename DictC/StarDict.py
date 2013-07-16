@@ -105,7 +105,7 @@ class StarDict(BaseDict):
         word, offset, size = item
         dic_file.seek(offset)
         explain = dic_file.read(size)
-        if ifo['sametypesequence'] == "tm":
+        if ifo.get('sametypesequence') == "tm":
             type, detail = explain.split('\0')
             if type:
                 explain = "[%s]\n%s" % (type, detail)
