@@ -9,6 +9,7 @@ from ctypes import (
 )
 from BaseDict import BaseDict
 from os import listdir
+import os.path
 from os.path import (
     expanduser,
     isdir,
@@ -26,11 +27,12 @@ class StarDict(BaseDict):
 
     _MAX_KEYWORD_LENGTH = 255
     _size = struct.calcsize('!ll')
+    _clib = 'libstardict.so'
 
     def __init__(self):
         super(StarDict, self).__init__()
 
-        libstardict = CDLL('./DictC/libstardict.so')
+        libstardict = CDLL(self.getCLib())
         self.parse_idx = libstardict.parse_idx
 
         dicts = self.dicts
@@ -69,6 +71,12 @@ class StarDict(BaseDict):
             dicts[basename]['dict'] = dic_file
 
     @staticmethod
+    def getCLib():
+        dl_dir = os.path.realpath(
+            os.path.join(os.path.dirname(__file__), '..'))
+        return os.path.join(dl_dir, StarDict._clib)
+
+    @staticmethod
     def getLink(keyword):
         return ""
 
@@ -95,18 +103,30 @@ class StarDict(BaseDict):
         if item is None:
             return None
         word, offset, size = item
+        sametypesequence = ifo.get('sametypesequence')
+        if sametypesequence is None:
+            #: hacky
+            offset = offset - 1
+            size = size + 2
         dic_file.seek(offset)
         explain = dic_file.read(size)
-        if ifo['sametypesequence'] == "tm":
+
+        if sametypesequence == "tm":
             type, detail = explain.split('\0')
             if type:
                 explain = "[%s]\n%s" % (type, detail)
             else:
                 explain = detail
+        elif sametypesequence is None:
+            #: hacky
+            position = explain.find('\x00t')
+            if position >= 0:
+                explain = \
+                    explain.replace('\x00t', "[", 1).replace('\x00m', "]\n", 1)
+            explain = explain.replace('\x00t', "").replace('\x00m', "\n")
         explain = '\t' + explain
         explain = explain.replace("\n", "\n\t")
         return "%s\n\n%s" % (ifo['bookname'], explain)
-        return None
 
     def _read_ifo(self, ifo_filename):
         file = open(ifo_filename, "rb")

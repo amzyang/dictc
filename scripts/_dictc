@@ -1,10 +1,16 @@
 #compdef dictc
 
+_external_look() {
+	if [[ -n "$words" ]] && which look 2>/dev/null 1>&2; then
+		compadd - $(look $words)
+	fi
+}
+
 _arguments -A "-*" \
 	'(- : *)'{-h,--help}'[show this help message and exit]' \
 	'(- : *)'{-v,--version}"[show program's version number and exit]" \
 	-c'[choose completion service]:completion:((bing dictcn spellcheck external))' \
 	-d'[choose dictionary]:dictionary:((bing stardict))' \
 	--nosound'[disable sound support]' \
-	'*: :_files'
+	'*::look:_external_look'
 	

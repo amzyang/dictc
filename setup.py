@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from distutils.core import setup
+from distutils.core import setup, Extension
+
+
+extLib = Extension('libstardict', ['DictC/stardict.c'],
+                   extra_compile_args=['-std=c99'])
 
 
 def extra_dependencies():
@@ -34,7 +38,8 @@ setup(
     - 发音支持
     需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
     """,
-    install_requires=extra_dependencies()
+    install_requires=extra_dependencies(),
+    ext_modules=[extLib, ],
 )
 
 
