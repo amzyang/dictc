@@ -61,39 +61,6 @@ class BaseDictTest(unittest.TestCase):
         reload(django.utils.html)
 
 
-class QQDictTest(unittest.TestCase):
-    def setUp(self):
-        from DictC.QQDict import QQDict
-        self.QQDict = QQDict
-        self.qq = QQDict()
-        self.keywords = ['addicted', 'nearest']
-
-    def test_fetchSuggestion(self):
-        keywords = [
-            '你', "it's", 'hello'
-        ]
-        for keyword in keywords:
-            data = self.QQDict.fetchSuggestion(keyword)
-            self.assertIsInstance(data, list)
-            self.assertTrue(data)
-
-        self.assertEqual(1, len(data))
-        self.assertTupleEqual((u'hello', u'int. 喂, 嘿'), data[0])
-
-        data = self.QQDict.fetchSuggestion('nearest')
-        self.assertIsInstance(data, list)
-        self.assertFalse(data)
-
-    def test_getOutput(self):
-        for keyword in self.keywords:
-            self.qq.setKeyword(keyword)
-            status, content = self.qq.getOutput()
-            self.assertTrue(status)
-
-    def tearDown(self):
-        pass
-
-
 class BingDictTest(unittest.TestCase):
     def setUp(self):
         self.keywords = ['addicted', 'hello', 'welcome', 'it\'s', '你',

@@ -10,11 +10,11 @@ _dictc()
             return
             ;;
         -d)
-            COMPREPLY=( $( compgen -W 'qq bing stardict' -- "$cur" ) )
+            COMPREPLY=( $( compgen -W 'bing stardict' -- "$cur" ) )
             return
             ;;
         -c)
-            COMPREPLY=( $( compgen -W 'qq bing dictcn spellcheck external' -- "$cur" ) )
+            COMPREPLY=( $( compgen -W 'bing dictcn spellcheck external' -- "$cur" ) )
             return
             ;;
     esac

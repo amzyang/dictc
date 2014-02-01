@@ -13,7 +13,6 @@ dictc 简单的在线查询单词小工具！
 ---------
 
 - 支持多个在线词典服务及星际译王词典
-  `qq 词典 <http://dict.qq.com>`_
   `bing 词典 <http://dict.bing.com.cn>`_
   `stardict 词典 <http://www.stardict.org>`_
 
@@ -61,8 +60,8 @@ https://github.com/grassofhust/dictc/raw/master/assets/dictc-lastest.noarch.rpm
 ::
 
      -h, --help           显示帮助信息
-     -d dictionary        词典（默认：qq）：qq,bing,stardict
-     -c completion        自动补全（默认：qq）：qq,bing,dictcn,spellcheck,external
+     -d dictionary        词典（默认：bing）：bing,stardict
+     -c completion        自动补全（默认：bing）：bing,dictcn,spellcheck,external
      --nosound            禁用发音（默认：启用）
      -v, --version        显示版本信息
 

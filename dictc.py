@@ -11,7 +11,6 @@ import readline
 import threading
 from DictC import (
     BaseDict,
-    QQDict,
     DictCnDict,
     BingDict,
     StarDict,
@@ -151,11 +150,10 @@ def get_parser():
     主要功能：
 
     - 支持多个在线词典服务及星际译王词典
-      qq        dict.qq.com
       bing      dict.bing.com.cn
       stardict  星际译王
     - 支持交互式模式下按<Tab>自动补全
-      qq,bing,dictcn(dict.cn),spellcheck(拼写检查),external(外部命令)
+      bing,dictcn(dict.cn),spellcheck(拼写检查),external(外部命令)
     - 发音支持
       需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
 
@@ -183,7 +181,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description=description, epilog=epilog,
                                      formatter_class=formatter_class)
     parser.add_argument('-d', nargs='?',
-                        help=u'词典（默认：qq）：%s ' %
+                        help=u'词典（默认：bing）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
                                      CLIAction.services)),
                         metavar=u'dictionary',
@@ -194,7 +192,7 @@ def get_parser():
                                     CLIAction.services),
                         )
     parser.add_argument('-c', nargs='?',
-                        help=u'自动补全（默认：qq）：%s ' %
+                        help=u'自动补全（默认：bing）：%s ' %
                         ','.join(map(lambda d: d.metadata['id'],
                                      CompletionAction.services)),
                         metavar=u'completion',
@@ -264,7 +262,7 @@ if __name__ == "__main__":
 
     class CLIAction(argparse.Action):
 
-        services = (QQDict, BingDict, StarDict)
+        services = (BingDict, StarDict)
 
         def __init__(self, *args, **kwargs):
             super(CLIAction, self).__init__(*args, **kwargs)
@@ -276,7 +274,7 @@ if __name__ == "__main__":
 
     class CompletionAction(CLIAction):
 
-        services = (QQDict, BingDict, DictCnDict, SpellCheck, External)
+        services = (BingDict, DictCnDict, SpellCheck, External)
 
     dict_instance = None
     command_line_runner()

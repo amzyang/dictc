@@ -27,11 +27,10 @@ setup(
     description=u'一个简单的在线查询单词小工具！',
     long_description=u"""主要功能：
     - 支持多个在线词典服务
-    qq        dict.qq.com
     bing      dict.bing.com.cn
     stardict  星际译王
     - 支持交互式模式下按<Tab>自动补全
-    qq/bing/dict(dict.cn)/spellcheck(拼写检查)/external(外部命令)
+    bing/dict(dict.cn)/spellcheck(拼写检查)/external(外部命令)
     - 发音支持
     需要 gstreamer 的 python 绑定，可以使用 yum/apt-get 安装。
     """,
